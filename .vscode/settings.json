@@ -1,0 +1,16 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}\\packages\\server"
+  ],
+  "python.analysis.exclude": [
+    "**/.venv/**",
+    "**/.virtualenvs/**",
+    "**/site-packages/**"
+  ],
+  "pylint.args": [
+    "--ignore-paths=.*\\\\.venv.*",
+    "--ignore-paths=.*\\\\.virtualenvs.*",
+    "--ignore-paths=.*site-packages.*"
+  ]
+}
