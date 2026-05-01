@@ -74,7 +74,11 @@ class Property(models.Model):
     description = models.TextField()
 
     price = models.DecimalField(max_digits=12, decimal_places=2)
-    currency = models.CharField(max_length=10, default='NGN')
+    currency = models.CharField(max_length=10, default='NGN', choices=[
+        ('NGN', 'Nigerian Naira'),
+        ('USD', 'US Dollar'),
+        ('EUR', 'Euro'),
+    ])
 
     location = models.ForeignKey(
         Location,
