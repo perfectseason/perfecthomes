@@ -2,7 +2,7 @@
 
 from django.contrib.auth.models import User
 from django.db import models
-from typing import cast
+
 
 
 # =======================
@@ -34,7 +34,21 @@ class Agent(models.Model):
     company = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
-        return self.user.get_username()
+        return str(self.user)
+
+
+# =========================================================================
+# CLIENT MODELS
+# =========================================================================
+class Client(models.Model):
+    """Client profile linked to a Django user."""
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+
+    def __str__(self):
+        return str(self.user)
 
 
 # =======================
@@ -62,7 +76,6 @@ class Property(models.Model):
     price = models.DecimalField(max_digits=12, decimal_places=2)
     currency = models.CharField(max_length=10, default='NGN')
 
-    # 🔗 Proper relationship
     location = models.ForeignKey(
         Location,
         on_delete=models.CASCADE,
@@ -83,7 +96,8 @@ class Property(models.Model):
     bedrooms = models.IntegerField(null=True, blank=True)
     bathrooms = models.IntegerField(null=True, blank=True)
     area = models.DecimalField(
-        max_digits=10, decimal_places=2, help_text="Size in sqm")
+        max_digits=10, decimal_places=2, help_text="Size in sqm"
+    )
 
     is_available = models.BooleanField(default=True)
     is_featured = models.BooleanField(default=False)
@@ -94,7 +108,7 @@ class Property(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
 
 # =======================
@@ -112,7 +126,7 @@ class PropertyImage(models.Model):
     is_featured = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Image for {self.property.title}"
+        return f"Image for {str(self.property)}"
 
 
 # =======================
@@ -124,7 +138,7 @@ class Feature(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class PropertyFeature(models.Model):
@@ -134,7 +148,7 @@ class PropertyFeature(models.Model):
     feature = models.ForeignKey(Feature, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.property} - {self.feature}"
+        return f"{str(self.property)} - {str(self.feature)}"
 
 
 # =======================
@@ -144,7 +158,8 @@ class Inquiry(models.Model):
     """Lead submitted by a prospective buyer or renter."""
 
     property = models.ForeignKey(
-        Property, on_delete=models.CASCADE, related_name='inquiries')
+        Property, on_delete=models.CASCADE, related_name='inquiries'
+    )
     name = models.CharField(max_length=255)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
@@ -153,7 +168,7 @@ class Inquiry(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Inquiry for {self.property.title}"
+        return f"Inquiry for {str(self.property)}"
 
 
 # =======================
@@ -166,12 +181,12 @@ class Favorite(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
 
     class Meta:
-        """Model options for favorite uniqueness."""
+        """Model options for saved favorite uniqueness."""
 
         unique_together = ('user', 'property')
 
     def __str__(self):
-        return f"{self.user} likes {self.property}"
+        return f"{str(self.user)} likes {str(self.property)}"
 
 
 # =======================
@@ -189,4 +204,4 @@ class Subscription(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.agent} - {self.plan}"
+        return f"{str(self.agent)} - {self.plan}"
