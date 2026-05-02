@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-
 # =======================
 # LOCATION MODEL
 # =======================
@@ -32,23 +31,71 @@ class Agent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=20)
     company = models.CharField(max_length=255, blank=True)
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='agents',
+    )
+
+    def full_name(self):
+        """Return the linked user's full name."""
+
+        first_name = getattr(self.user, 'first_name', '')
+        last_name = getattr(self.user, 'last_name', '')
+        return f"{first_name} {last_name}".strip()
+
+    def email(self):
+        """Return the linked user's email address."""
+
+        return getattr(self.user, 'email', '')
+
+    def phone_number(self):
+        """Return the agent's phone number."""
+
+        return str(self.phone)
 
     def __str__(self):
-        return str(self.user)
+        return self.full_name() or str(self.user)
 
 
-# =========================================================================
-# CLIENT MODELS
-# =========================================================================
+# =======================
+# CLIENT MODEL
+# =======================
 class Client(models.Model):
     """Client profile linked to a Django user."""
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    email = models.EmailField()
     phone = models.CharField(max_length=20)
+    company = models.CharField(max_length=255, blank=True)
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='clients',
+    )
+
+    def full_name(self):
+        """Return the linked user's full name."""
+
+        first_name = getattr(self.user, 'first_name', '')
+        last_name = getattr(self.user, 'last_name', '')
+        return f"{first_name} {last_name}".strip()
+
+    def email(self):
+        """Return the linked user's email address."""
+
+        return getattr(self.user, 'email', '')
+
+    def phone_number(self):
+        """Return the client's phone number."""
+
+        return str(self.phone)
 
     def __str__(self):
-        return str(self.user)
+        return self.full_name() or str(self.user)
 
 
 # =======================
@@ -74,11 +121,15 @@ class Property(models.Model):
     description = models.TextField()
 
     price = models.DecimalField(max_digits=12, decimal_places=2)
-    currency = models.CharField(max_length=10, default='NGN', choices=[
-        ('NGN', 'Nigerian Naira'),
-        ('USD', 'US Dollar'),
-        ('EUR', 'Euro'),
-    ])
+    currency = models.CharField(
+        max_length=10,
+        default='NGN',
+        choices=[
+            ('NGN', 'Nigerian Naira'),
+            ('USD', 'US Dollar'),
+            ('EUR', 'Euro'),
+        ]
+    )
 
     location = models.ForeignKey(
         Location,
@@ -100,7 +151,9 @@ class Property(models.Model):
     bedrooms = models.IntegerField(null=True, blank=True)
     bathrooms = models.IntegerField(null=True, blank=True)
     area = models.DecimalField(
-        max_digits=10, decimal_places=2, help_text="Size in sqm"
+        max_digits=10,
+        decimal_places=2,
+        help_text="Size in sqm"
     )
 
     is_available = models.BooleanField(default=True)
@@ -130,7 +183,7 @@ class PropertyImage(models.Model):
     is_featured = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Image for {str(self.property)}"
+        return f"Image for {self.property}"
 
 
 # =======================
@@ -152,7 +205,7 @@ class PropertyFeature(models.Model):
     feature = models.ForeignKey(Feature, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{str(self.property)} - {str(self.feature)}"
+        return f"{self.property} - {self.feature}"
 
 
 # =======================
@@ -162,7 +215,9 @@ class Inquiry(models.Model):
     """Lead submitted by a prospective buyer or renter."""
 
     property = models.ForeignKey(
-        Property, on_delete=models.CASCADE, related_name='inquiries'
+        Property,
+        on_delete=models.CASCADE,
+        related_name='inquiries'
     )
     name = models.CharField(max_length=255)
     email = models.EmailField()
@@ -172,7 +227,7 @@ class Inquiry(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Inquiry for {str(self.property)}"
+        return f"Inquiry for {self.property}"
 
 
 # =======================
@@ -190,11 +245,11 @@ class Favorite(models.Model):
         unique_together = ('user', 'property')
 
     def __str__(self):
-        return f"{str(self.user)} likes {str(self.property)}"
+        return f"{self.user} likes {self.property}"
 
 
 # =======================
-# SUBSCRIPTIONS (MONETIZATION)
+# SUBSCRIPTIONS
 # =======================
 class Subscription(models.Model):
     """Paid plan for an agent."""
@@ -208,4 +263,4 @@ class Subscription(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{str(self.agent)} - {self.plan}"
+        return f"{self.agent} - {self.plan}"
