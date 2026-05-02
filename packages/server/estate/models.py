@@ -1,5 +1,9 @@
 """Database models for estate listings and related user activity."""
 
+from urllib import request
+
+from urllib import request
+
 from django.contrib.auth.models import User
 from django.db import models
 

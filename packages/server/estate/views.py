@@ -244,8 +244,9 @@ def property_image_detail(request, property_image_id):
 def favorite_list(request):
     """Render saved favorite properties for the logged-in user."""
 
-    favorites = Favorite.objects.filter(
-        user=request.user)  # pylint: disable=no-member
+    favorites = Favorite.objects.filter(  # pylint: disable=no-member
+        user=request.user
+    )
     return render(
         request,
         'estate/favorite_list.html',
@@ -260,8 +261,9 @@ def favorite_list(request):
 def subscription_list(request):
     """Render subscriptions for the logged-in agent user."""
 
-    subscriptions = Subscription.objects.filter(
-        agent__user=request.user)  # pylint: disable=no-member
+    subscriptions = Subscription.objects.filter(  # pylint: disable=no-member
+        agent__user=request.user
+    )
     return render(
         request,
         'estate/subscription_list.html',
