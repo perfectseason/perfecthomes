@@ -3,6 +3,7 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 from .models import (
     Agent,
@@ -15,6 +16,16 @@ from .models import (
     PropertyFeature,
     PropertyImage,
     Subscription,
+)
+from .serializers import (
+    AgentSerializer,
+    ClientSerializer,
+    FavoriteSerializer,
+    LocationSerializer,
+    PropertyFeatureSerializer,
+    PropertyImageSerializer,
+    PropertySerializer,
+    SubscriptionSerializer,
 )
 
 
@@ -281,3 +292,118 @@ def subscription_detail(request, subscription_id):
         'subscription',
         subscription_id,
     )
+
+
+# =======================
+# API VIEWS
+# =======================
+class LocationListCreateView(ListCreateAPIView):
+    """List and create locations."""
+
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+
+
+class LocationDetailView(RetrieveUpdateDestroyAPIView):
+    """Retrieve, update, partially update, and delete one location."""
+
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+
+
+class AgentListCreateView(ListCreateAPIView):
+    """List and create agents."""
+
+    queryset = Agent.objects.all()
+    serializer_class = AgentSerializer
+
+
+class AgentDetailView(RetrieveUpdateDestroyAPIView):
+    """Retrieve, update, partially update, and delete one agent."""
+
+    queryset = Agent.objects.all()
+    serializer_class = AgentSerializer
+
+
+class ClientListCreateView(ListCreateAPIView):
+    """List and create clients."""
+
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+
+
+class ClientDetailView(RetrieveUpdateDestroyAPIView):
+    """Retrieve, update, partially update, and delete one client."""
+
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+
+
+class PropertyListCreateView(ListCreateAPIView):
+    """List and create properties."""
+
+    queryset = Property.objects.all()
+    serializer_class = PropertySerializer
+
+
+class PropertyDetailView(RetrieveUpdateDestroyAPIView):
+    """Retrieve, update, partially update, and delete one property."""
+
+    queryset = Property.objects.all()
+    serializer_class = PropertySerializer
+
+
+class PropertyImageListCreateView(ListCreateAPIView):
+    """List and create property images."""
+
+    queryset = PropertyImage.objects.all()
+    serializer_class = PropertyImageSerializer
+
+
+class PropertyImageDetailView(RetrieveUpdateDestroyAPIView):
+    """Retrieve, update, partially update, and delete one property image."""
+
+    queryset = PropertyImage.objects.all()
+    serializer_class = PropertyImageSerializer
+
+
+class PropertyFeatureListCreateView(ListCreateAPIView):
+    """List and create property features."""
+
+    queryset = PropertyFeature.objects.all()
+    serializer_class = PropertyFeatureSerializer
+
+
+class PropertyFeatureDetailView(RetrieveUpdateDestroyAPIView):
+    """Retrieve, update, partially update, and delete one property feature."""
+
+    queryset = PropertyFeature.objects.all()
+    serializer_class = PropertyFeatureSerializer
+
+
+class FavoriteListCreateView(ListCreateAPIView):
+    """List and create favorites."""
+
+    queryset = Favorite.objects.all()
+    serializer_class = FavoriteSerializer
+
+
+class FavoriteDetailView(RetrieveUpdateDestroyAPIView):
+    """Retrieve, update, partially update, and delete one favorite."""
+
+    queryset = Favorite.objects.all()
+    serializer_class = FavoriteSerializer
+
+
+class SubscriptionListCreateView(ListCreateAPIView):
+    """List and create subscriptions."""
+
+    queryset = Subscription.objects.all()
+    serializer_class = SubscriptionSerializer
+
+
+class SubscriptionDetailView(RetrieveUpdateDestroyAPIView):
+    """Retrieve, update, partially update, and delete one subscription."""
+
+    queryset = Subscription.objects.all()
+    serializer_class = SubscriptionSerializer
