@@ -258,11 +258,25 @@ class Favorite(models.Model):
 class Subscription(models.Model):
     """Paid plan for an agent."""
 
+    FREE_SUBSCRIPTION = 'F'
+    ONE_MONTH_SUBSCRIPTION = 'B'
+    SIX_MONTHS_SUBSCRIPTION = 'S'
+    ONE_YEAR_SUBSCRIPTION = 'G'
+
+    SUBSCRIPTION_CHOICES = [
+        (FREE_SUBSCRIPTION, 'Free'),
+        (ONE_MONTH_SUBSCRIPTION, 'Bronze'),
+        (SIX_MONTHS_SUBSCRIPTION, 'Silver'),
+        (ONE_YEAR_SUBSCRIPTION, 'Gold')
+    ]
+
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
     plan = models.CharField(max_length=100)
 
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
+    subscription = models.CharField(
+        max_length=1, choices=SUBSCRIPTION_CHOICES, default='F')
 
     is_active = models.BooleanField(default=True)
 
