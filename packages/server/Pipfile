@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pillow = "*"
 pylint-django = "*"
 django-debug-toolbar = "*"
 django-cors-headers = "*"
@@ -12,8 +11,18 @@ drf-nested-routers = "*"
 django-filter = "*"
 mysqlclient = "*"
 djoser = "*"
+pillow = "*"
+django-templated-mail = "*"
+redis = "*"
+celery = "*"
+flower = "*"
 
 [dev-packages]
+pytest = "*"
+pytest-django = "*"
+pytest-watch = "*"
+model-bakery = "*"
+locust = "*"
 
 [requires]
 python_version = "3.11"
