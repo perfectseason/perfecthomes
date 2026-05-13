@@ -1,11 +1,11 @@
 """Database models for estate listings and related user activity."""
 
 from urllib import request
-
-from urllib import request
-
+from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User
 from django.db import models
+from uuid import uuid4
+from estate.validator import validate_file_size
 
 
 # =======================
@@ -124,7 +124,9 @@ class Property(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
 
-    price = models.DecimalField(max_digits=12, decimal_places=2)
+    price = models.DecimalField(max_digits=12,
+                                decimal_places=2,
+                                validators=[MinValueValidator(1)])
     currency = models.CharField(
         max_length=10,
         default='NGN',
@@ -183,7 +185,8 @@ class PropertyImage(models.Model):
         related_name='images',
         on_delete=models.CASCADE
     )
-    image = models.ImageField(upload_to='property_gallery/')
+    image = models.ImageField(
+        upload_to='property_gallery/', validators=[validate_file_size])
     is_featured = models.BooleanField(default=False)
 
     def __str__(self):

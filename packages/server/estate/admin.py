@@ -1,7 +1,8 @@
 """Django admin configuration for estate app models."""
 
-from django.contrib import admin
+from django.contrib import admin, messages
 from django import forms
+from django.utils.html import format_html, urlencode
 from django.contrib.auth.models import User
 from .models import (
     Agent,
@@ -15,6 +16,22 @@ from .models import (
     PropertyImage,
     Subscription,
 )
+
+
+class InventoryFilter(admin.SimpleFilter):
+    title = 'property'
+    parameter_name = 'property'
+
+    def lookups(self, request, model_admin):
+        return [
+            ('<1', 'Unavailable')
+            ('>0', 'Available')
+        ]
+
+    def queryset(self, request, quesryset: Queryset):
+        if self.value() == '<1', '>0':
+            return queryset.filter(inventory_lt=1, inventory_gt=0)
+
 
 
 class ProfileAdminForm(forms.ModelForm):
@@ -119,6 +136,7 @@ class AgentAdmin(admin.ModelAdmin):
     )
 
 
+
 class ClientAdmin(admin.ModelAdmin):
     """Admin options for client profiles."""
 
@@ -132,11 +150,23 @@ class ClientAdmin(admin.ModelAdmin):
         'location',
         'company',
     )
+    search_fields = ['first_name__istartwith']
 
 
+class PropertyImageInline(admin.TabularInline):
+    model = models.ProductImage
+    readonly_fields = ['thumbnail']
+
+    def thumbnail(self, instance):
+        if instance.image.name != '':
+            return format_html(f'<img src="{instance.image.url}" class="thumbnail" />')
+        return ''
+
+
+@admin.register(models.Product)
 class PropertyAdmin(admin.ModelAdmin):
-    """Admin options for property listings."""
-
+    """Admin options for property listings.
+    actions = ['clear_inventory']
     fields = (
         'title',
         'description',
@@ -153,6 +183,7 @@ class PropertyAdmin(admin.ModelAdmin):
         'is_featured',
         'video_url',
     )
+    inlines = [ProductImageInline]
     list_display = (
         'id',
         'title',
@@ -160,10 +191,55 @@ class PropertyAdmin(admin.ModelAdmin):
         'currency',
         'property_type',
         'listing_type',
+        'Inventory_Filter'
         'location',
         'agent',
         'is_available',
     )
+
+
+
+    @admin.action(description='Clear property')
+    def clear_property(self, request, queryset):
+        updated_count = queryset.update(property=0)
+        self.message_user(
+            request,
+            f'{updated_count} property were succesfully updated.'
+            message.ERROR
+        )
+
+    ordering = ['first_name', 'last_name']
+    search_fields = ['property__istartwith', 'location__istartwith']
+
+    @admin.display(description='Agent')
+    class inventory_status(admin.SimpleListFilter):
+        # """Custom filter for property availability."""
+
+        title = 'Inventory Status'
+        parameter_name = 'inventory_status'
+
+        def lookups(self, request, model_admin):
+            """Return filter options for inventory status."""
+
+            return (
+                ('available', 'Available'),
+                ('unavailable', 'Unavailable'),
+            )
+
+        def queryset(self, request, queryset):
+            """Filter properties based on selected inventory status."""
+
+            if self.value() == 'available':
+                return queryset.filter(is_available=True)
+            elif self.value() == 'unavailable':
+                return queryset.filter(is_available=False)
+            return queryset
+
+
+        class media:
+            css = {
+                 'all': ['estate/style.css']
+            }
 
 
 class PropertyImageAdmin(admin.ModelAdmin):
@@ -199,6 +275,7 @@ class InquiryAdmin(admin.ModelAdmin):
 
     fields = ('property', 'name', 'email', 'phone', 'message')
     list_display = ('id', 'name', 'email', 'phone', 'property', 'created_at')
+    search_fields = ['property__istartwith', 'location__istartwith']
 
 
 class FavoriteAdmin(admin.ModelAdmin):
