@@ -1,9 +1,24 @@
 import Navbar from "../components/ui/NavBar";
 import Footer from "../components/ui/Footer";
-import ChatBot from "@/components/chat/ChatBot";
 import customerImg from "../assets/products/customer.jpeg";
 import supermarketImg from "../assets/products/supermarket.jpg";
 import supermarket2Img from "../assets/products/supermarket2.jpg";
+
+const ChatBot = () => (
+  <div className="h-full flex flex-col justify-between gap-4 bg-gray-50 rounded-xl p-4">
+    <div className="space-y-4">
+      <div className="bg-blue-50 text-blue-700 rounded-xl p-4">
+        Welcome! How can we help you today?
+      </div>
+      <div className="bg-white border border-gray-200 rounded-xl p-4 text-gray-600">
+        Ask a question and our team will get back to you shortly.
+      </div>
+    </div>
+    <button className="w-full bg-blue-400 text-white py-3 rounded-md hover:bg-blue-700 transition">
+      Open Chat
+    </button>
+  </div>
+);
 
 const Contact = () => {
   const customer = {
