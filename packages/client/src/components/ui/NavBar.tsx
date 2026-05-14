@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import logo from "../../assets/products/logo.jpg";
 
 const Navbar = () => {
@@ -11,15 +10,15 @@ const Navbar = () => {
         </h1>
 
         <div className="space-x-6">
-          <Link to="/" className="hover:text-blue-600 transition">
+          <a href="/" className="hover:text-blue-600 transition">
             Home
-          </Link>
-          <Link to="/about" className="hover:text-blue-600 transition">
+          </a>
+          <a href="/about" className="hover:text-blue-600 transition">
             About
-          </Link>
-          <Link to="/contact" className="hover:text-blue-600 transition">
+          </a>
+          <a href="/contact" className="hover:text-blue-600 transition">
             Contact
-          </Link>
+          </a>
         </div>
       </div>
     </nav>
