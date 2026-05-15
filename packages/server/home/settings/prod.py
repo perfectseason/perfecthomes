@@ -8,7 +8,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 
 ALLOWED_HOSTS = ['homeproperty-prod.herokuapp.com']
 
-DATABASE = {
+DATABASES = {
     'default': dj_database_url.config()
 }
 
@@ -19,7 +19,7 @@ CELERY_BROKER_URL = REDIS_URL
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": REDIS_URL
+        "LOCATION": REDIS_URL,
         'TIMEOUT': 10 * 60,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",

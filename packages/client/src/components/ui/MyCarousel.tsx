@@ -1,4 +1,3 @@
-import React from "react";
 import Autoplay from "embla-carousel-autoplay";
 
 import {
@@ -9,30 +8,33 @@ import {
   CarouselPrevious,
 } from "./carousel";
 
-export default function MyCarousel() {
-  const images = [
-    "/house1.jpg",
-    "/house2.jpg",
-    "/interior1.jpg",
-    "/interior2.jpg",
-  ];
+const images = [
+  { src: "/house 1.jpg", alt: "Modern detached house exterior" },
+  { src: "/house 2.jpg", alt: "Residential property frontage" },
+  { src: "/house 3.jpg", alt: "Contemporary home exterior" },
+  { src: "/house 4.jpg", alt: "Featured property exterior" },
+  { src: "/interior 1.jpg", alt: "Finished living room interior" },
+  { src: "/interior 3.jpg", alt: "Bright property interior" },
+];
 
+export default function MyCarousel() {
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full">
       <Carousel
         plugins={[
           Autoplay({
-            delay: 2000,
+            delay: 3500,
+            stopOnInteraction: true,
           }),
         ]}
       >
         <CarouselContent>
-          {images.map((img, index) => (
-            <CarouselItem key={index}>
+          {images.map((image) => (
+            <CarouselItem key={image.src}>
               <img
-                src={img}
-                alt="carousel image"
-                className="w-full h-[400px] object-cover rounded-xl"
+                src={image.src}
+                alt={image.alt}
+                className="h-[360px] w-full rounded-lg object-cover sm:h-[460px]"
               />
             </CarouselItem>
           ))}

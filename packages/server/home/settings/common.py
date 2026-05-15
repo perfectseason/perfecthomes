@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'dango_filters'
+    'django_filters',
     'estate',
     'silk',
     'likes',
@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoice.middleware.WhiteNoiseMiddleware'
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -59,7 +59,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-if DEBUG:
+if globals().get('DEBUG', False):
     MIDDLEWARE += ['silk.middleware.SilkyMiddleware',]
 
 
@@ -127,7 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_URL = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -138,6 +138,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ORIGINS = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
     'http://localhost:8001',
     'http://127.0.0.1:8001',
 ]
@@ -157,7 +159,7 @@ REST_FRAMEWORK = {
 CELERY_BROKER_URL = 'redis://localhost:6379/1'
 CELERY_BEAT_SCHEDULE = {
     'notify_customers': {
-        'task': 'home,tasks.notify_customers',
+        'task': 'home.tasks.notify_customers',
         'schedule': crontab(day_of_week=1, hour=7, minute=30)
     }
 }
@@ -168,7 +170,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'handlers': {
         'console': {
-            'class': 'logging.StramHandler'
+            'class': 'logging.StreamHandler'
         },
         'file': {
             'class': 'logging.FileHandler',
@@ -179,13 +181,13 @@ LOGGING = {
     'loggers': {
         '': {
             'handlers': ['console', 'file'],
-            'level': os.environs.get('DJANGO_LOG_LEVEL', 'INFO')
+            'level': os.environ.get('DJANGO_LOG_LEVEL', 'INFO')
         }
 
     },
     'formatters': {
         'verbose': {
-            'format': '{asctime} {levelname}) - {name} - {message}'
+            'format': '{asctime} {levelname}) - {name} - {message}',
             'style': '{'
         }
     }

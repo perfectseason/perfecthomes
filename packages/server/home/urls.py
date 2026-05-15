@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 import debug_toolbar
 from django.urls import path, include
+from . import views
 
 
 admin.site.site_header = 'PERFECTHOMES Admin'
@@ -26,6 +27,8 @@ admin.site.index_title = 'HOME Admin'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/chat/', views.chat, name='chat'),
+    path('api/estate/', include('estate.urls')),
     path('estate/', include('estate.urls')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),

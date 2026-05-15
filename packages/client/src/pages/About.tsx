@@ -1,12 +1,7 @@
-import NavBar from "../components/ui/NavBar";
-import Footer from "../components/ui/Footer";
-
 const About = () => {
   return (
     <>
-      <NavBar />
-
-      <section className="pt-28 min-h-screen bg-white">
+      <section className="min-h-screen bg-white">
         <div className="max-w-5xl mx-auto px-6 py-20">
           <h1 className="text-2xl font-bold text-gray-800">About Us</h1>
 
@@ -38,8 +33,6 @@ const About = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </>
   );
 };

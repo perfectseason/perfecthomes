@@ -45,10 +45,12 @@ function Slot({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement> & { children?: React.ReactNode }) {
-  if (React.isValidElement(children)) {
+  if (React.isValidElement<React.HTMLAttributes<HTMLElement>>(children)) {
+    const childProps = children.props;
+
     return React.cloneElement(children, {
       ...props,
-      className: cn(children.props.className, className),
+      className: cn(childProps.className, className),
     });
   }
 

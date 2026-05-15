@@ -4,8 +4,8 @@ import ChatInput, { type ChatFormData } from "./ChatImput";
 import type { Message } from "./ChatMessages";
 import ChatMessages from "./ChatMessages";
 import TypingIndicator from "./TypingIndicator";
-import popSound from "@/assets/sounds/pop.mp3";
-import notificationSound from "@/assets/sounds/notification.mp3";
+import popSound from "../../assets/sounds/pop.mp3";
+import notificationSound from "../../assets/sounds/notification.mp3";
 
 const popAudio = new Audio(popSound);
 popAudio.volume = 0.2;
@@ -30,7 +30,7 @@ const ChatBot = () => {
       setError("");
       popAudio.play();
 
-      const { data } = await axios.post<ChatResponse>("/api/chat", {
+      const { data } = await axios.post<ChatResponse>("/api/chat/", {
         prompt,
         conversationId: conversationId.current,
       });

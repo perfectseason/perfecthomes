@@ -1,13 +1,6 @@
-import Navbar from "../components/ui/NavBar";
-import Footer from "../components/ui/Footer";
-import MyCarousel from "../components/ui/MyCarousel";
-import ChatBot from "../components/chat/ChatBot";
-
 const Home = () => {
   return (
-    <div className="flex flex-col gap-4 p-4">
-      <Navbar />
-
+    <div className="min-h-screen bg-gray-100">
       {/* Hero Section */}
       <section
         className="h-[90vh] bg-cover bg-center flex items-center justify-center relative"
@@ -42,7 +35,6 @@ const Home = () => {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-
           {/* Property Card 1 */}
           <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
             <img
@@ -111,10 +103,8 @@ const Home = () => {
               </button>
             </div>
           </div>
-
         </div>
       </section>
-      <Footer />
     </div>
   );
 };

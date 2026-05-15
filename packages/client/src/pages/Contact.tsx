@@ -1,9 +1,3 @@
-import Navbar from "../components/ui/NavBar";
-import Footer from "../components/ui/Footer";
-import customerImg from "../assets/products/customer.jpeg";
-import supermarketImg from "../assets/products/supermarket.jpg";
-import supermarket2Img from "../assets/products/supermarket2.jpg";
-
 const ChatBot = () => (
   <div className="h-full flex flex-col justify-between gap-4 bg-gray-50 rounded-xl p-4">
     <div className="space-y-4">
@@ -24,24 +18,23 @@ const Contact = () => {
   const customer = {
     id: 1,
     name: "customer",
-    image: customerImg,
+    image: "/house 1.jpg",
   };
 
   const supermarket = {
     id: 2,
     name: "supermarket",
-    image: supermarketImg,
+    image: "/interior 1.jpg",
   };
 
   const supermarket2 = {
     id: 3,
     name: "supermarket2",
-    image: supermarket2Img,
+    image: "/house 2.jpg",
   };
   return (
     <>
-      <Navbar />
-      <section className="pt-28 min-h-screen bg-gray-50">
+      <section className="min-h-screen bg-gray-50">
         <div className="max-w-3xl mx-auto px-6 py-20">
           <h1 className="text-2xl font-bold text-gray-800 mb-8">Contact Us</h1>
           <h2 className="text-lg text-gray-600 mb-6">
@@ -131,7 +124,6 @@ const Contact = () => {
         </div>
       </div>
 
-      <Footer />
     </>
   );
 };

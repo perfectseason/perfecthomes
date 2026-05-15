@@ -1,0 +1,19 @@
+2026-05-14 15:27:21,720 INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2026-05-14 15:27:22,528 WARNING) - silk.profiling.profiler - Cannot execute silk_profile as silk is not installed correctly.
+2026-05-14 15:30:52,486 WARNING) - silk.profiling.profiler - Cannot execute silk_profile as silk is not installed correctly.
+2026-05-14 15:31:54,426 WARNING) - silk.profiling.profiler - Cannot execute silk_profile as silk is not installed correctly.
+2026-05-14 15:32:45,155 WARNING) - silk.profiling.profiler - Cannot execute silk_profile as silk is not installed correctly.
+2026-05-14 15:36:59,283 WARNING) - silk.profiling.profiler - Cannot execute silk_profile as silk is not installed correctly.
+2026-05-14 22:39:11,928 INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2026-05-14 22:39:21,201 WARNING) - silk.profiling.profiler - Cannot execute silk_profile as silk is not installed correctly.
+2026-05-14 22:39:46,302 WARNING) - django.request - Not Found: /
+2026-05-14 22:39:48,291 WARNING) - django.request - Not Found: /favicon.ico
+2026-05-14 22:40:34,515 WARNING) - django.request - Not Found: /
+2026-05-14 22:40:35,317 WARNING) - django.request - Not Found: /favicon.ico
+2026-05-14 22:56:46,954 WARNING) - django.request - Not Found: /estate/auth
+2026-05-14 22:59:31,177 WARNING) - django.request - Not Found: /estate/register
+2026-05-14 23:02:59,616 WARNING) - django.request - Not Found: /estate/properties
+2026-05-14 23:04:19,331 WARNING) - django.request - Not Found: /estate/
+2026-05-14 23:04:45,679 WARNING) - django.request - Not Found: /estate/favorite
+2026-05-14 23:06:03,997 WARNING) - django.request - Not Found: /estate/property-feature
+2026-05-14 23:09:30,970 WARNING) - django.request - Not Found: /estate/locations

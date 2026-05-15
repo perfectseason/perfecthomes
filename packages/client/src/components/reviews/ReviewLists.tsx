@@ -7,7 +7,7 @@ import {
   type GetReviewsResponse,
   reviewsApi,
   type SummarizeResponse,
-} from "./reviewApi";
+} from "./ReviewApi";
 
 type Props = {
   productId: number;
